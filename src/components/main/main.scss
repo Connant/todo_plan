@@ -1,0 +1,67 @@
+.main {
+  background: #AFAFAF;
+  height: 100vh;
+}
+
+.main__button-wrapper {
+  margin: auto;
+  margin-top: 10%;
+  width: 203px;
+}
+
+.main__button {
+  // width: 203px;
+  text-decoration: none;
+  border: 1px solid #000000;
+  color: transparent;
+  padding: 15px 38px;
+  font-size: 24px;
+  line-height: 30px;
+
+  transition: all 0.5s;
+  position: relative;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.main__button:before,
+.main__button:after {
+  content: "get started";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  font-size: 24px;
+  line-height: 30px;
+
+  color: #000000;
+  top: 0;
+  left: 100%;
+  transition: all 1s;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transform: scale(0) rotatey(0);
+  opacity: 0;
+  border-radius: 10px;
+}
+
+.main__button:hover:before {
+  transform: scale(1) rotatey(360deg);
+  left: 0;
+  opacity: 1;
+}
+
+.main__button:after {
+  top: 0;
+  left: 0;
+  transform: scale(1) rotatey(0);
+  opacity: 1;
+  border-radius: 10px;
+}
+
+.main__button:hover:after {
+  transform: scale(0) rotatey(360deg);
+  left: -100%;
+  opacity: 0;
+}
