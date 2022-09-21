@@ -1,17 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const ActionType = {
-  ADD: "ADD",
-  DELETE: "DELETE",
-};
-
-export type FilterState = {
-  sort: string;
-};
-
-export type AppClient = {
-  filter: FilterState;
-};
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState, store } from "./store";
 
 export type TaskType = {
   id: number;
@@ -22,26 +12,38 @@ export type TaskType = {
 
 export type TaskList = TaskType[];
 
-export type AppData = {
+export type State = {
   task: TaskType;
   taskList: TaskList;
+  error: string;
 };
 
-const initialState: AppData = {
+const initialState: State = {
   task: {} as TaskType,
   taskList: [],
+  error: 'error',
 };
 
 const appDataSlice = createSlice({
   name: "Data",
   initialState,
   reducers: {
-    addTaskList: (state, action: PayloadAction<TaskList>) => {
+    addTask: (state, action: PayloadAction<TaskType>) => {
+      state.task = action.payload;
+    },
+    addTaskList: (state, action: PayloadAction<Array<TaskType>>) => {
       state.taskList = action.payload;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
     },
   },
 });
 
-export const { addTaskList } = appDataSlice.actions;
+export const { addTask, addTaskList, setError } = appDataSlice.actions;
 
 export default appDataSlice.reducer;
+
+// export type RootState = ReturnType<typeof store.getState>;
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
