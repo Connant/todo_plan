@@ -29,6 +29,10 @@ export default function Header(): JSX.Element {
         <h1 className="header__main-title">Task list</h1>
       </Link>
 
+      <Link to="/list">
+        <h2 className="header__main-title">back</h2>
+      </Link>
+
       <h2 className="header__title">{content(location)}</h2>
 
       {location === "/list" ? (

@@ -1,14 +1,50 @@
-import React from "react";
+import React, { FormEvent, useState } from "react";
+import { loadTaskList, useAppDispatch, useAppSelector } from "../../store/reducer";
 import Header from "../header/header";
+import { nanoid } from 'nanoid'
 import "./form.scss";
+import { getTaskList } from "../../store/selectors";
+import { useNavigate } from "react-router-dom";
 
 export default function Form(): JSX.Element {
+
+  const task = useAppSelector(getTaskList);
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  console.log(task)
+
+
+  // const send = (data: TaskType) => dispatch(addTask(data));
+
+  const handleSubmit = (evt: FormEvent) => {
+    evt.preventDefault();
+
+    const postData = {
+      id: nanoid(),
+      title: title,
+      description: description,
+      done: false
+    };
+
+    const arr = task;
+
+    dispatch(loadTaskList([...arr, postData]))
+    navigate('/list')
+  };
+
+
   return (
     <div>
       <Header />
       <section className="form-section">
         <h2 className="form-section__title">New task? great, let's do it!</h2>
-        <form className="form-section__form form">
+        <form className="form-section__form form" action="#" onSubmit={handleSubmit}>
           <label className="form__label label-title" htmlFor="title">
             Title
           </label>
@@ -17,6 +53,7 @@ export default function Form(): JSX.Element {
             type="text"
             name="title"
             id="title"
+            onChange={(evt) => setTitle(evt.currentTarget.value)}
           />
           <label
             className="form__label label-description"
@@ -28,24 +65,7 @@ export default function Form(): JSX.Element {
             className="form__input input-description"
             name="description"
             id="description"
-          />
-          <label className="form__label label-tag" htmlFor="tag">
-            Tag
-          </label>
-          <select className="form__input input-tag" name="tag" id="tag">
-            <option value="value1">#important</option>
-            <option value="value2">#communication</option>
-            <option value="value3">without tag</option>
-          </select>
-          <label className="form__label label-date" htmlFor="deadline_date">
-            Deadline date
-          </label>
-          <input
-            className="form__input input-date"
-            type="date"
-            name="deadline_date"
-            id="deadline_date"
-            defaultValue="2022-09-15"
+            onChange={(evt) => setDescription(evt.currentTarget.value)}
           />
           <button className="form__button" type="submit">
             Add task

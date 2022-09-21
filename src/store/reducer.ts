@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState, store } from "./store";
+import { AppDispatch, RootState } from "./store";
 
 export type TaskType = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   done: boolean;
@@ -31,7 +31,7 @@ const appDataSlice = createSlice({
     addTask: (state, action: PayloadAction<TaskType>) => {
       state.task = action.payload;
     },
-    addTaskList: (state, action: PayloadAction<Array<TaskType>>) => {
+    loadTaskList: (state, action: PayloadAction<TaskList>) => {
       state.taskList = action.payload;
     },
     setError: (state, action: PayloadAction<string>) => {
@@ -40,7 +40,7 @@ const appDataSlice = createSlice({
   },
 });
 
-export const { addTask, addTaskList, setError } = appDataSlice.actions;
+export const { addTask, loadTaskList, setError } = appDataSlice.actions;
 
 export default appDataSlice.reducer;
 
